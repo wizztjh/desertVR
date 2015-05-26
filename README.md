@@ -4,6 +4,9 @@ A VR desert world with three js
 
 will add VR mode soon
 
-### credit
+### How to run locally
+`python -m SimpleHTTPServer`
+
+### Credit
 
 - [SkyShader](http://threejs.org/examples/webgl_shaders_sky.html) from Joshua
