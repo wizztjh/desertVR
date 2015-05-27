@@ -110,7 +110,6 @@ function animate() {
   terrain.position.x = 100 * Math.cos(gameObject.clock.getElapsedTime()/5)
 
   gameObject.render()
-  gameObject.controls.update()
 
   requestAnimationFrame( animate );
 }

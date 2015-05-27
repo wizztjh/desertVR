@@ -1,21 +1,25 @@
 function GameObject(initObjs) {
   self = this
 
-  this.SCREEN_WIDTH = window.innerWidth
-  this.SCREEN_HEIGHT = window.innerHeight
-
   this.objects = {};
+
+  this.renderer = new THREE.WebGLRenderer({ antialias: false });
+  this.renderer.setPixelRatio(window.devicePixelRatio);
+
+  document.body.appendChild(this.renderer.domElement);
 
   this.scene = new THREE.Scene();
   this.scene.fog = new THREE.FogExp2( 0xffff99, 0.0075 );
 
-  this.renderer = new THREE.WebGLRenderer();
-  this.renderer.setSize( this.SCREEN_WIDTH, this.SCREEN_HEIGHT );
+  this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 10000);
 
-  this.camera =  new THREE.PerspectiveCamera( 75, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 20000 );
-  this.camera.position.z = 0.0001;
+  this.controls = new THREE.VRControls(this.camera);
 
-  this.controls = new THREE.OrbitControls( this.camera );
+  this.effect = new THREE.VREffect(this.renderer);
+  this.effect.setSize(window.innerWidth, window.innerHeight);
+
+  this.manager = new WebVRManager(this.renderer, this.effect, {hideButton: false});
+
   this.clock = new THREE.Clock(true)
   this.clock.start()
 
@@ -23,6 +27,13 @@ function GameObject(initObjs) {
     returnObject = initObjs[name].apply(self)
     self.add(name, returnObject);
   });
+  window.addEventListener('resize', this.onWindowResize.bind(this), false);
+}
+
+GameObject.prototype.onWindowResize = function() {
+  this.camera.aspect = window.innerWidth / window.innerHeight;
+  this.camera.updateProjectionMatrix();
+  this.effect.setSize( window.innerWidth, window.innerHeight );
 }
 
 GameObject.prototype.add = function(name, returnObject){
@@ -39,7 +50,8 @@ GameObject.prototype.render = function(){
     }
   })
 
-  this.renderer.render(this.scene, this.camera);
+  this.controls.update()
+  this.manager.render(this.scene, this.camera)
 }
 
 GameObject.prototype.find = function(name){
