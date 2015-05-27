@@ -2,8 +2,6 @@ A VR desert world with three js
 
 [demo](http://wizztjh.github.io/desertVR/)
 
-will add VR mode soon
-
 ### How to run locally
 `python -m SimpleHTTPServer`
 
