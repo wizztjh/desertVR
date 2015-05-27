@@ -31,6 +31,11 @@ function GameObject(initObjs) {
   window.addEventListener('resize', this.onWindowResize.bind(this), false);
 }
 
+GameObject.prototype.gameTimeOfDay = function(){
+  var elapsedTime = self.clock.getElapsedTime()
+  return Math.abs(Math.sin((elapsedTime/10)))
+}
+
 GameObject.prototype.getWidth = function(){
   return window.innerWidth
 }

@@ -30,7 +30,7 @@ function init() {
       geometry.computeFaceNormals();
       geometry.computeVertexNormals();
 
-      material = new THREE.MeshBasicMaterial({
+      material = new THREE.MeshLambertMaterial({
         color: 0xcfb68d,
         side: THREE.DoubleSide
       } );
@@ -48,54 +48,75 @@ function init() {
     light: function() {
       return {
         mesh: new THREE.AmbientLight(0x222222)
+
       }
     },
 
     directionalLight: function(){
+      var self = this;
       var directionalLight = new THREE.DirectionalLight(0xffffff, 0.00);
       directionalLight.position.set(1, 1, 1).normalize();
+
+      function animate(){
+        directionalLight.intensity = 1- self.gameTimeOfDay()
+      }
+
       return {
-        mesh: directionalLight
+        mesh: directionalLight,
+        animate: animate
       }
     },
 
     sunSphere: function() {
-      var inclination = 0.38
-      var azimuth = 0.25
-      var distance = 4000
-
+      var self = this
       var sunSphere = new THREE.Mesh(
         new THREE.SphereGeometry( 20000, 30, 30 ),
         new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: false })
       )
 
-      var theta = Math.PI * (inclination - 0.5)
-      var phi = 2 * Math.PI * (azimuth - 0.5)
+      function animate(){
+        var inclination = self.gameTimeOfDay()
+        var azimuth = 0.25
+        var distance = 4000
 
-      sunSphere.position.x = distance * Math.cos(phi);
-      sunSphere.position.y = distance * Math.sin(phi) * Math.sin(theta);
-      sunSphere.position.z = distance * Math.sin(phi) * Math.cos(theta);
+
+        var theta = Math.PI * (inclination - 0.5)
+        var phi = 2 * Math.PI * (azimuth - 0.5)
+
+        sunSphere.position.x = distance * Math.cos(phi);
+        sunSphere.position.y = distance * Math.sin(phi) * Math.sin(theta);
+        sunSphere.position.z = distance * Math.sin(phi) * Math.cos(theta);
+      }
+      animate()
 
       return {
-        mesh: sunSphere
+        mesh: sunSphere,
+        animate: animate
       }
     },
 
     skybox: function(){
-      var sunSphere = this.findMesh('sunSphere')
+      var self = this
       var sky = new THREE.Sky()
-      sky.uniforms.turbidity.value=1
-      sky.uniforms.reileigh.value=0.9
-      sky.uniforms.mieCoefficient.value=0.005
-      sky.uniforms.mieDirectionalG.value=0.8
-      sky.uniforms.luminance.value=1
-      sky.uniforms.sunPosition.value.copy(sunSphere.position);
-      return sky
+      function animate(){
+        var sunSphere = self.findMesh('sunSphere')
+        sky.uniforms.turbidity.value=1
+        sky.uniforms.reileigh.value=0.9
+        sky.uniforms.mieCoefficient.value=0.005
+        sky.uniforms.mieDirectionalG.value=0.8
+        sky.uniforms.luminance.value=1
+        sky.uniforms.sunPosition.value.copy(sunSphere.position);
+      }
+      animate()
+
+      return {
+        mesh: sky.mesh,
+        animate: animate
+      }
     }
   });
 
   terrain= gameObject.findMesh('terrain')
-  directionalLight = gameObject.findMesh('directionalLight')
 
 
   document.body.appendChild( gameObject.renderer.domElement );
@@ -104,7 +125,6 @@ function init() {
 
 function animate() {
   var terrain = gameObject.findMesh('terrain');
-  var directionalLight = gameObject.findMesh('directionalLight');
 
   terrain.position.z = 100 * Math.sin(gameObject.clock.getElapsedTime()/5)
   terrain.position.x = 100 * Math.cos(gameObject.clock.getElapsedTime()/5)
