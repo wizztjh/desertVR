@@ -25,7 +25,7 @@ function init() {
 
       }
 
-      animate()
+      animate();
 
       geometry.computeFaceNormals();
       geometry.computeVertexNormals();
@@ -46,27 +46,14 @@ function init() {
     },
 
     light: function() {
-	animate = function(){
-        var verticeCount = geometry.vertices.length
-        var elapsedTime = self.clock.getElapsedTime()  
-        for ( var i = 0, verticeCount ; i < verticeCount; i ++ ) {
-          geometry.vertices[ i ].y =  (10 * Math.sin( (i/2) )+ 3* Math.cos( i/2));
-        }
-
-        geometry.verticesNeedUpdate = true;
-
-      }
-	  animate();
       return {
         mesh: new THREE.AmbientLight(0x222222)
       }
-	  
     },
 
     directionalLight: function(){
       var directionalLight = new THREE.DirectionalLight(0xffffff, 0.00);
       directionalLight.position.set(1, 1, 1).normalize();
-	  
       return {
         mesh: directionalLight
       }
@@ -103,7 +90,15 @@ function init() {
       sky.uniforms.mieDirectionalG.value=0.8
       sky.uniforms.luminance.value=1
       sky.uniforms.sunPosition.value.copy(sunSphere.position);
-	  
+
+	animate = function(){
+		for ( var i = 90; i < 360; i++ ) {
+          sky.uniforms.reileigh.value = sky.uniforms.reileigh.value * Math.sin(i);
+        }
+
+        sunSphere.verticesNeedUpdate = true;
+	}
+	animate();
       return sky
     }
   });
