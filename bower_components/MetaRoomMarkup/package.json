@@ -1,0 +1,61 @@
+{
+  "name": "metaroom-markup",
+  "version": "0.0.0",
+  "description": "",
+  "main": "build/meta-verse.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "web-components",
+    "virtual-reality",
+    "webgl",
+    "meta-component"
+  ],
+  "author": "wizztjh@gmail.com",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "babel": "^5.6.7",
+    "babelify": "^6.1.2",
+    "bower": "^1.5.3",
+    "browserify": "^10.2.4",
+    "css": "reworkcss/css",
+    "del": "^1.2.0",
+    "es6ify": "^1.6.0",
+    "fs": "0.0.2",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-babel": "^5.1.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-debug": "^2.0.1",
+    "gulp-load-plugins": "^1.0.0-rc.1",
+    "gulp-plumber": "^1.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.0.1",
+    "gulp-sequence": "^0.3.2",
+    "gulp-serve": "^1.0.0",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-streamify": "0.0.5",
+    "gulp-traceur": "^0.17.1",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.6",
+    "gulp-vulcanize": "^6.0.1",
+    "gulp-webserver": "^0.9.1",
+    "run-sequence": "^1.1.1",
+    "stringify-object": "^2.0.0",
+    "through2": "^2.0.0",
+    "tildify": "^1.1.0",
+    "traceur": "0.0.90",
+    "vinyl-source-stream": "^1.1.0",
+    "vulcanize": "^1.9.3",
+    "web-component-tester": "^3.2.0"
+  }
+}
