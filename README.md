@@ -9,4 +9,4 @@ A VR desert world with three js
 - [threejs](https://github.com/mrdoob/three.js/)
 - [webVR Boilerplate](https://github.com/borismus/webvr-boilerplate)
 - [SkyShader](http://threejs.org/examples/webgl_shaders_sky.html) from Joshua
-- [Embrace] from Matt Schultz (mrschultz@gmail.com)
+- [Embrace](mrschultz@gmail.com) from Matt Schultz 
