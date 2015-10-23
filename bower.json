@@ -1,0 +1,28 @@
+{
+  "name": "desertVR",
+  "version": "0.0.1",
+  "homepage": "https://github.com/wizztjh/desertVR",
+  "authors": [
+    "jiahen <wizztjh@gmail.com>"
+  ],
+  "description": "DesertVR using Metaroom-Markup",
+  "main": "index.html",
+  "keywords": [
+    "desert",
+    "metaroom",
+    "metaroom-markup"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "MetaRoomMarkup": "git@github.com:MetaRoomMarkup/MetaRoomMarkup.git#gh-pages",
+    "webcomponentsjs": "~0.7.15",
+    "jquery": "*"
+  }
+}

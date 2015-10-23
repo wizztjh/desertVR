@@ -7,20 +7,40 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>desertVR</title>
     <link rel="stylesheet" href="style/main.css">
+    <script src="./bower_components/webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="./bower_components/MetaRoomMarkup/dist/metaroom-markup.html">
+    <script src='./scripts/ShaderSky.js' id='sky'></script>
   </head>
   <body>
     <script>
       CARDBOARD_DEBUG = false;
     </script>
-    <script src="lib/three.js"></script>
-    <script src="lib/VRControls.js"></script>
-    <script src="lib/VREffect.js"></script>
-    <script src="lib/webvr-polyfill.js"></script>
-    <script src="lib/webvr-manager.js"></script>
-    <script src="lib/OrbitControls.js"></script>
-    <script src="lib/PointerLockControls.js"></script>
-    <script src="lib/SkyShader.js"></script>
-    <script src="scripts/game_object.js"></script>
-    <script src="scripts/main.js"></script>
+    <meta-verse meta-style='material-type: sky'>
+    <meta-floor width='1000' length='1000' meta-style='geometry-segment-x: 32; geometry-segment-y: 32'>
+      <meta-item width='30' length='60' height='50' material-src='assets/model/Embrace/embrace_Textured_1.mtl' geometry-src='assets/model/Embrace/embrace_Textured_1.obj' meta-style='position: absolute; top: 400; left: 500; z: -20; rotate-z: 90' id='meta-item-on-floor'></meta-item>
+    </meta-floor>
+    </meta-verse>
+  </body>
+  <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      var verseController = document.getElementsByTagName('meta-verse')[0].controller;
+      verseController.gameObject.scene.fog.density = 0.0075;
+      verseController.gameObject.scene.fog.color.setHex(0xffff99);
+
+      var floorController = document.getElementsByTagName('meta-floor')[0].controller;
+      var floorVertices = floorController.metaObject.mesh.geometry.vertices;
+      floorController.metaObject.mesh.geometry.dynamic = true;
+      for ( var i = 0 ; i < floorVertices.length; i ++ ) {
+          floorVertices[ i ].z =  (4 * Math.sin( (i/2) )+ 3* Math.cos( i/2));;
+      }
+      floorController.metaObject.mesh.geometry.verticesNeedUpdate = true;
+      floorController.metaObject.mesh.geometry.normalsNeedUpdate = true;
+      floorController.metaObject.mesh.material.color.setHex(0xcfb68d);
+      floorController.metaObject.mesh.geometry.computeFaceNormals();
+      floorController.metaObject.mesh.geometry.computeVertexNormals();
+    });
+
+  </script>
   </body>
 </html>
